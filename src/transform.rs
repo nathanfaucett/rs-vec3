@@ -1,0 +1,98 @@
+use num::Num;
+use length::length_values;
+
+
+#[inline(always)]
+pub fn transform_mat3<T: Num>(out: &mut [T; 3], a: [T; 3], m: [T; 9]) -> &mut [T; 3] {
+    out[0] = a[0] * m[0] + a[1] * m[3] + a[2] * m[6];
+    out[1] = a[0] * m[1] + a[1] * m[4] + a[2] * m[7];
+    out[2] = a[0] * m[2] + a[1] * m[5] + a[2] * m[8];
+    out
+}
+
+#[inline(always)]
+pub fn transform_mat4<T: Num>(out: &mut [T; 3], a: [T; 3], m: [T; 16]) -> &mut [T; 3] {
+    out[0] = a[0] * m[0] + a[1] * m[4] + a[2] * m[8] + m[12];
+    out[1] = a[0] * m[1] + a[1] * m[5] + a[2] * m[9] + m[13];
+    out[2] = a[0] * m[2] + a[1] * m[6] + a[2] * m[10] + m[14];
+    out
+}
+
+#[inline(always)]
+pub fn transform_mat4_rotation<T: Num>(out: &mut [T; 3], a: [T; 3], m: [T; 16]) -> &mut [T; 3] {
+    out[0] = a[0] * m[0] + a[1] * m[4] + a[2] * m[8];
+    out[1] = a[0] * m[1] + a[1] * m[5] + a[2] * m[9];
+    out[2] = a[0] * m[2] + a[1] * m[6] + a[2] * m[10];
+    out
+}
+
+#[inline(always)]
+pub fn transform_projection<T: Num>(out: &mut [T; 3], a: [T; 3], m: [T; 16]) -> &mut [T; 3] {
+    let mut d = a[0] * m[3] + a[1] * m[7] + a[2] * m[11] + m[15];
+    d = if d != T::zero() {T::one() / d} else {d};
+
+    out[0] = (a[0] * m[0] + a[1] * m[4] + a[2] * m[8] + m[12]) * d;
+    out[1] = (a[0] * m[1] + a[1] * m[5] + a[2] * m[9] + m[13]) * d;
+    out[2] = (a[0] * m[2] + a[1] * m[6] + a[2] * m[10] + m[14]) * d;
+    out
+}
+
+#[inline(always)]
+pub fn transform_quat<T: Num>(out: &mut [T; 3], a: [T; 3], q: [T; 4]) -> &mut [T; 3] {
+    let ix = q[3] * a[0] + q[1] * a[2] - q[2] * a[1];
+    let iy = q[3] * a[1] + q[2] * a[0] - q[0] * a[2];
+    let iz = q[3] * a[2] + q[0] * a[1] - q[1] * a[0];
+    let iw = -q[0] * a[0] - q[1] * a[1] - q[2] * a[2];
+
+    out[0] = ix * q[3] + iw * -q[0] + iy * -q[2] - iz * -q[1];
+    out[1] = iy * q[3] + iw * -q[1] + iz * -q[0] - ix * -q[2];
+    out[2] = iz * q[3] + iw * -q[2] + ix * -q[1] - iy * -q[0];
+    out
+}
+
+#[inline(always)]
+pub fn position_mat32<T: Num>(out: &mut [T; 3], m: [T; 6]) -> &mut [T; 3] {
+    out[0] = m[4];
+    out[1] = m[5];
+    out
+}
+
+#[inline(always)]
+pub fn position_mat4<T: Num>(out: &mut [T; 3], m: [T; 16]) -> &mut [T; 3] {
+    out[0] = m[12];
+    out[1] = m[13];
+    out[2] = m[14];
+    out
+}
+
+#[inline(always)]
+pub fn scale_mat2<T: Num>(out: &mut [T; 3], m: [T; 4]) -> &mut [T; 3] {
+    out[0] = length_values(m[0], m[2], T::zero());
+    out[1] = length_values(m[1], m[3], T::zero());
+    out[2] = T::one();
+    out
+}
+
+#[inline(always)]
+pub fn scale_mat32<T: Num>(out: &mut [T; 3], m: [T; 6]) -> &mut [T; 3] {
+    out[0] = length_values(m[0], m[2], T::zero());
+    out[1] = length_values(m[1], m[3], T::zero());
+    out[2] = T::one();
+    out
+}
+
+#[inline(always)]
+pub fn scale_mat3<T: Num>(out: &mut [T; 3], m: [T; 9]) -> &mut [T; 3] {
+    out[0] = length_values(m[0], m[3], m[6]);
+    out[1] = length_values(m[1], m[4], m[7]);
+    out[2] = length_values(m[2], m[5], m[8]);
+    out
+}
+
+#[inline(always)]
+pub fn scale_mat4<T: Num>(out: &mut [T; 3], m: [T; 16]) -> &mut [T; 3] {
+    out[0] = length_values(m[0], m[4], m[8]);
+    out[1] = length_values(m[1], m[5], m[9]);
+    out[2] = length_values(m[2], m[6], m[10]);
+    out
+}
