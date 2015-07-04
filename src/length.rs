@@ -72,8 +72,8 @@ pub fn normalize<T: Num>(out: &mut [T; 3], a: [T; 3]) -> &mut [T; 3] {
 #[test]
 fn test_normalize() {
     let mut v = [0, 0, 0];
-    normalize(&mut v, [1, 1, 1]);
-    assert!(v[0] == 1);
-    assert!(v[1] == 1);
+    normalize(&mut v, [0, 0, 1]);
+    assert!(v[0] == 0);
+    assert!(v[1] == 0);
     assert!(v[2] == 1);
 }
