@@ -1,5 +1,3 @@
-extern crate vec2;
-
 use num::Num;
 use length::length_values;
 
@@ -69,16 +67,16 @@ pub fn position_mat4<T: Num>(out: &mut [T; 3], m: [T; 16]) -> &mut [T; 3] {
 
 #[inline(always)]
 pub fn scale_mat2<T: Num>(out: &mut [T; 3], m: [T; 4]) -> &mut [T; 3] {
-    out[0] = vec2::length_values(m[0], m[2]);
-    out[1] = vec2::length_values(m[1], m[3]);
+    out[0] = length_values(m[0], m[2], T::zero());
+    out[1] = length_values(m[1], m[3], T::zero());
     out[2] = T::one();
     out
 }
 
 #[inline(always)]
 pub fn scale_mat32<T: Num>(out: &mut [T; 3], m: [T; 6]) -> &mut [T; 3] {
-    out[0] = vec2::length_values(m[0], m[2]);
-    out[1] = vec2::length_values(m[1], m[3]);
+    out[0] = length_values(m[0], m[2], T::zero());
+    out[1] = length_values(m[1], m[3], T::zero());
     out[2] = T::one();
     out
 }
