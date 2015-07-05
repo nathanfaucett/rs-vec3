@@ -14,3 +14,20 @@ fn test_set() {
     set(&mut v, 1, 2, 3);
     assert!(v == [1, 2, 3]);
 }
+
+#[inline(always)]
+pub fn zero<T: Num>(out: &mut [T; 3]) -> &mut [T; 3] { set(out, T::zero(), T::zero(), T::zero()) }
+#[inline(always)]
+pub fn identity<T: Num>(out: &mut [T; 3]) -> &mut [T; 3] { set(out, T::zero(), T::zero(), T::zero()) }
+#[inline(always)]
+pub fn up<T: Num>(out: &mut [T; 3]) -> &mut [T; 3] { set(out, T::zero(), T::zero(), T::one()) }
+#[inline(always)]
+pub fn down<T: Num>(out: &mut [T; 3]) -> &mut [T; 3] { set(out, T::zero(), T::zero(), -T::one()) }
+#[inline(always)]
+pub fn forward<T: Num>(out: &mut [T; 3]) -> &mut [T; 3] { set(out, T::zero(), T::one(), T::one()) }
+#[inline(always)]
+pub fn back<T: Num>(out: &mut [T; 3]) -> &mut [T; 3] { set(out, T::zero(), -T::one(), T::zero()) }
+#[inline(always)]
+pub fn left<T: Num>(out: &mut [T; 3]) -> &mut [T; 3] { set(out, -T::one(), T::zero(), T::one()) }
+#[inline(always)]
+pub fn right<T: Num>(out: &mut [T; 3]) -> &mut [T; 3] { set(out, T::one(), T::zero(), T::one()) }

@@ -12,21 +12,6 @@ fn test_create() {
 }
 
 #[inline(always)]
-pub fn zero<T: Num>() -> [T; 3] {create(T::zero(), T::zero(), T::zero())}
-#[inline(always)]
-pub fn up<T: Num>() -> [T; 3] {create(T::zero(), T::zero(), T::one())}
-#[inline(always)]
-pub fn down<T: Num>() -> [T; 3] {create(T::zero(), T::zero(), -T::one())}
-#[inline(always)]
-pub fn forward<T: Num>() -> [T; 3] {create(T::zero(), T::one(), T::zero())}
-#[inline(always)]
-pub fn back<T: Num>() -> [T; 3] {create(T::zero(), -T::one(), -T::zero())}
-#[inline(always)]
-pub fn right<T: Num>() -> [T; 3] {create(T::one(), T::zero(), T::zero())}
-#[inline(always)]
-pub fn left<T: Num>() -> [T; 3] {create(-T::one(), T::zero(), T::zero())}
-
-#[inline(always)]
 pub fn clone<T: Num>(v: [T; 3]) -> [T; 3] {create(v[0], v[1], v[2])}
 
 #[inline(always)]
