@@ -27,6 +27,18 @@ pub fn right<T: Num>() -> [T; 3] {create(T::one(), T::zero(), T::zero())}
 pub fn left<T: Num>() -> [T; 3] {create(-T::one(), T::zero(), T::zero())}
 
 #[inline(always)]
-pub fn copy<T: Num>(v: [T; 3]) -> [T; 3] {create(v[0], v[1], v[2])}
-#[inline(always)]
 pub fn clone<T: Num>(v: [T; 3]) -> [T; 3] {create(v[0], v[1], v[2])}
+
+#[inline(always)]
+pub fn copy<T: Num>(out: &mut [T; 3], a: [T; 3]) -> &mut [T; 3] {
+    out[0] = a[0];
+    out[1] = a[1];
+    out[2] = a[2];
+    out
+}
+#[test]
+fn test_copy() {
+    let mut v = [0, 0, 0];
+    copy(&mut v, [1, 2, 3]);
+    assert!(v == [1, 2, 3]);
+}
