@@ -38,6 +38,17 @@ pub fn transform_projection<T: Num>(out: &mut [T; 3], a: [T; 3], m: [T; 16]) -> 
 }
 
 #[inline(always)]
+pub fn transform_projection_no_position<T: Num>(out: &mut [T; 3], a: [T; 3], m: [T; 16]) -> &mut [T; 3] {
+    let mut d = a[0] * m[3] + a[1] * m[7] + a[2] * m[11] + m[15];
+    d = if d != T::zero() {T::one() / d} else {d};
+
+    out[0] = (a[0] * m[0] + a[1] * m[4] + a[2] * m[8]) * d;
+    out[1] = (a[0] * m[1] + a[1] * m[5] + a[2] * m[9]) * d;
+    out[2] = (a[0] * m[2] + a[1] * m[6] + a[2] * m[10]) * d;
+    out
+}
+
+#[inline(always)]
 pub fn transform_quat<T: Num>(out: &mut [T; 3], a: [T; 3], q: [T; 4]) -> &mut [T; 3] {
     let ix = q[3] * a[0] + q[1] * a[2] - q[2] * a[1];
     let iy = q[3] * a[1] + q[2] * a[0] - q[0] * a[2];
