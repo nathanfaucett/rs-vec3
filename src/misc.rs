@@ -1,4 +1,5 @@
 use num::Num;
+use approx::Approx;
 
 
 #[inline(always)]
@@ -74,4 +75,27 @@ fn test_clamp() {
     let mut v = [0, 0, 0];
     clamp(&mut v, &[2, 2, 2], &[0, 0, 0], &[1, 1, 1]);
     assert!(v == [1, 1, 1]);
+}
+
+
+#[inline(always)]
+pub fn eq<'a, T: Num>(a: &'a [T; 3], b: &'a [T; 3]) -> bool {
+    !nq(a, b)
+}
+#[test]
+fn test_eq() {
+    assert_eq!(eq(&[1f32, 1f32, 1f32], &[1f32, 1f32, 1f32]), true);
+    assert_eq!(eq(&[0f32, 0f32, 0f32], &[1f32, 1f32, 1f32]), false);
+}
+
+#[inline(always)]
+pub fn nq<'a, T: Num>(a: &'a [T; 3], b: &'a [T; 3]) -> bool {
+    !a[0].approx_eq(b[0]) ||
+    !a[1].approx_eq(b[1]) ||
+    !a[2].approx_eq(b[2])
+}
+#[test]
+fn test_nq() {
+    assert_eq!(nq(&[1f32, 1f32, 1f32], &[1f32, 1f32, 1f32]), false);
+    assert_eq!(nq(&[0f32, 0f32, 0f32], &[1f32, 1f32, 1f32]), true);
 }
