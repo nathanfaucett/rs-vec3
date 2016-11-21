@@ -1,9 +1,9 @@
-use num::Num;
+use num::Unsigned;
 use div::sdiv;
 
 
 #[inline(always)]
-pub fn length_values_sq<'a, 'b, T: Num>(x: T, y: T, z: T) -> T {
+pub fn length_values_sq<'a, 'b, T: Unsigned>(x: T, y: T, z: T) -> T {
     x * x + y * y + z * z
 }
 #[test]
@@ -12,7 +12,7 @@ fn test_length_values_sq() {
 }
 
 #[inline(always)]
-pub fn length_values<'a, 'b, T: Num>(x: T, y: T, z: T) -> T {
+pub fn length_values<'a, 'b, T: Unsigned>(x: T, y: T, z: T) -> T {
     let lsq = length_values_sq(x, y, z);
     if lsq == T::zero() {lsq} else {lsq.sqrt()}
 }
@@ -22,7 +22,7 @@ fn test_length_values() {
 }
 
 #[inline(always)]
-pub fn inv_length_values<'a, 'b, T: Num>(x: T, y: T, z: T) -> T {
+pub fn inv_length_values<'a, 'b, T: Unsigned>(x: T, y: T, z: T) -> T {
     let lsq = length_values_sq(x, y, z);
     if lsq == T::zero() {lsq} else {T::one() / lsq.sqrt()}
 }
@@ -32,7 +32,7 @@ fn test_inv_length_values() {
 }
 
 #[inline(always)]
-pub fn dot<'a, 'b, T: Num>(a: &'b [T; 3], b: &'b [T; 3]) -> T {
+pub fn dot<'a, 'b, T: Unsigned>(a: &'b [T; 3], b: &'b [T; 3]) -> T {
     a[0] * b[0] + a[1] * b[1] + a[2] * b[2]
 }
 #[test]
@@ -41,7 +41,7 @@ fn test_dot() {
 }
 
 #[inline(always)]
-pub fn cross<'a, 'b, T: Num>(out: &'a mut [T; 3], a: &'b [T; 3], b: &'b [T; 3]) -> &'a mut [T; 3] {
+pub fn cross<'a, 'b, T: Unsigned>(out: &'a mut [T; 3], a: &'b [T; 3], b: &'b [T; 3]) -> &'a mut [T; 3] {
     out[0] = a[1] * b[2] - a[2] * b[1];
     out[1] = a[2] * b[0] - a[0] * b[2];
     out[2] = a[0] * b[1] - a[1] * b[0];
@@ -57,7 +57,7 @@ fn test_cross() {
 }
 
 #[inline(always)]
-pub fn length<'a, 'b, T: Num>(out: &'b [T; 3]) -> T {
+pub fn length<'a, 'b, T: Unsigned>(out: &'b [T; 3]) -> T {
     length_values(out[0], out[1], out[2])
 }
 #[test]
@@ -66,7 +66,7 @@ fn test_length() {
 }
 
 #[inline(always)]
-pub fn normalize<'a, 'b, T: Num>(out: &'a mut [T; 3], a: &'b [T; 3]) -> &'a mut [T; 3] {
+pub fn normalize<'a, 'b, T: Unsigned>(out: &'a mut [T; 3], a: &'b [T; 3]) -> &'a mut [T; 3] {
     sdiv(out, a, length(a))
 }
 #[test]
