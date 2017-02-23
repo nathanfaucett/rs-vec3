@@ -90,9 +90,9 @@ fn test_eq() {
 
 #[inline(always)]
 pub fn ne<'a, T: Unsigned>(a: &'a [T; 3], b: &'a [T; 3]) -> bool {
-    !a[0].approx_eq(b[0]) ||
-    !a[1].approx_eq(b[1]) ||
-    !a[2].approx_eq(b[2])
+    !Approx::approx_eq(a[0], b[0]) ||
+    !Approx::approx_eq(a[1], b[1]) ||
+    !Approx::approx_eq(a[2], b[2])
 }
 #[test]
 fn test_ne() {
