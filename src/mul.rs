@@ -1,7 +1,7 @@
 use num::Num;
 
 
-#[inline(always)]
+#[inline]
 pub fn mul<'a, 'b, T: Num>(out: &'a mut [T; 3], a: &'b [T; 3], b: &'b [T; 3]) ->  &'a mut [T; 3] {
     out[0] = a[0] * b[0];
     out[1] = a[1] * b[1];
@@ -17,7 +17,7 @@ fn test_mul() {
     assert!(v[2] == 1);
 }
 
-#[inline(always)]
+#[inline]
 pub fn smul<'a, 'b, T: Num>(out: &'a mut [T; 3], a: &'b [T; 3], s: T) ->  &'a mut [T; 3] {
     out[0] = a[0] * s;
     out[1] = a[1] * s;

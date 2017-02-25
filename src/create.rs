@@ -1,9 +1,9 @@
 use num::Num;
 
 
-#[inline(always)]
+#[inline]
 pub fn new<T: Num>(x: T, y: T, z: T) -> [T; 3] {[x, y, z]}
-#[inline(always)]
+#[inline]
 pub fn create<T: Num>(x: T, y: T, z: T) -> [T; 3] {new(x, y, z)}
 #[test]
 fn test_new() {
@@ -13,10 +13,10 @@ fn test_new() {
     assert!(v[2] == 3);
 }
 
-#[inline(always)]
+#[inline]
 pub fn clone<'b, T: Num>(v: &'b [T; 3]) -> [T; 3] {new(v[0], v[1], v[2])}
 
-#[inline(always)]
+#[inline]
 pub fn copy<'a, 'b, T: Num>(out: &'a mut [T; 3], a: &'b [T; 3]) -> &'a mut [T; 3] {
     out[0] = a[0];
     out[1] = a[1];
@@ -30,13 +30,13 @@ fn test_copy() {
     assert!(v == [1, 2, 3]);
 }
 
-#[inline(always)]
+#[inline]
 pub fn from_vec2<'a, 'b, T: Num>(out: &'a mut [T; 3], v: &'b [T; 2]) -> &'a mut [T; 3] {
     out[0] = v[0];
     out[1] = v[1];
     out
 }
-#[inline(always)]
+#[inline]
 pub fn from_vec4<'a, 'b, T: Num>(out: &'a mut [T; 3], v: &'b [T; 4]) -> &'a mut [T; 3] {
     out[0] = v[0];
     out[1] = v[1];

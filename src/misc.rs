@@ -3,7 +3,7 @@ use signed::Signed;
 use approx_eq::ApproxEq;
 
 
-#[inline(always)]
+#[inline]
 pub fn inverse<'a, 'b, T: Signed>(out: &'a mut [T; 3], a: &'b [T; 3]) -> &'a mut [T; 3] {
     out[0] = -a[0];
     out[1] = -a[1];
@@ -19,7 +19,7 @@ fn test_inverse() {
     assert!(v[2] == -1);
 }
 
-#[inline(always)]
+#[inline]
 pub fn lerp<'a, 'b, T: Num, N: Num>(out: &'a mut [T; 3], a: &'b [T; 3], b: &'b [T; 3], t: N) -> &'a mut [T; 3] {
     let t_f64 = t.to_f64();
     out[0] = T::from_f64((a[0] + (b[0] - a[0])).to_f64() * t_f64);
@@ -36,7 +36,7 @@ fn test_lerp() {
     assert_eq!(v[2], 1);
 }
 
-#[inline(always)]
+#[inline]
 pub fn min<'a, 'b, T: Num>(out: &'a mut [T; 3], a: &'b [T; 3], b: &'b [T; 3]) -> &'a mut [T; 3] {
     out[0] = if b[0] < a[0] {b[0]} else {a[0]};
     out[1] = if b[1] < a[1] {b[1]} else {a[1]};
@@ -50,7 +50,7 @@ fn test_min() {
     assert!(v == [0, 0, 0]);
 }
 
-#[inline(always)]
+#[inline]
 pub fn max<'a, 'b, T: Num>(out: &'a mut [T; 3], a: &'b [T; 3], b: &'b [T; 3]) -> &'a mut [T; 3] {
     out[0] = if b[0] > a[0] {b[0]} else {a[0]};
     out[1] = if b[1] > a[1] {b[1]} else {a[1]};
@@ -64,7 +64,7 @@ fn test_max() {
     assert!(v == [1, 1, 1]);
 }
 
-#[inline(always)]
+#[inline]
 pub fn clamp<'a, 'b, T: Num>(out: &'a mut [T; 3], a: &'b [T; 3], min: &'b [T; 3], max: &'b [T; 3]) -> &'a mut [T; 3] {
     out[0] = if a[0] < min[0] {min[0]} else if a[0] > max[0] {max[0]} else {a[0]};
     out[1] = if a[1] < min[1] {min[1]} else if a[1] > max[1] {max[1]} else {a[1]};
@@ -79,7 +79,7 @@ fn test_clamp() {
 }
 
 
-#[inline(always)]
+#[inline]
 pub fn eq<'a, T: Num + ApproxEq>(a: &'a [T; 3], b: &'a [T; 3]) -> bool {
     !ne(a, b)
 }
@@ -89,7 +89,7 @@ fn test_eq() {
     assert_eq!(eq(&[0f32, 0f32, 0f32], &[1f32, 1f32, 1f32]), false);
 }
 
-#[inline(always)]
+#[inline]
 pub fn ne<'a, T: Num + ApproxEq>(a: &'a [T; 3], b: &'a [T; 3]) -> bool {
     !a[0].approx_eq(b[0]) ||
     !a[1].approx_eq(b[1]) ||
