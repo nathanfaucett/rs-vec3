@@ -2,7 +2,7 @@ use num::Num;
 
 
 #[inline]
-pub fn sub<'a, 'b, T: Num>(out: &'a mut [T; 3], a: &'b [T; 3], b: &'b [T; 3]) ->  &'a mut [T; 3] {
+pub fn sub<'a, 'b, T: Copy + Num>(out: &'a mut [T; 3], a: &'b [T; 3], b: &'b [T; 3]) ->  &'a mut [T; 3] {
     out[0] = a[0] - b[0];
     out[1] = a[1] - b[1];
     out[2] = a[2] - b[2];
@@ -18,7 +18,7 @@ fn test_sub() {
 }
 
 #[inline]
-pub fn ssub<'a, 'b, T: Num>(out: &'a mut [T; 3], a: &'b [T; 3], s: T) ->  &'a mut [T; 3] {
+pub fn ssub<'a, 'b, T: Copy + Num>(out: &'a mut [T; 3], a: &'b [T; 3], s: T) ->  &'a mut [T; 3] {
     out[0] = a[0] - s;
     out[1] = a[1] - s;
     out[2] = a[2] - s;
